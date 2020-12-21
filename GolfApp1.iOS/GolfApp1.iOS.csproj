@@ -133,4 +133,10 @@
       <Name>GolfApp1</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SharecardBase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SharecardTitle.png" />
+  </ItemGroup>
 </Project>

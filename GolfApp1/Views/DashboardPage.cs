@@ -18,6 +18,7 @@ namespace GolfApp1.Views
 
         public DashboardPage()
         {
+            this.BackgroundImageSource = "SharecardBase.png";
             StackLayout stackLayout = new StackLayout();
 
             createCourseButton = new Button();
@@ -67,9 +68,6 @@ namespace GolfApp1.Views
                 HttpResponseMessage response = await client.GetAsync(address + id);
                 msg = await response.Content.ReadAsStringAsync();
 
-                Course curCourse = parseCourse(msg);
-
-                courses.Add(curCourse);
 
                 if (msg.Contains("message") && msg.Contains("Could Not Find That Course"))
                 {
@@ -77,6 +75,8 @@ namespace GolfApp1.Views
                 }
                 else
                 {
+                    Course curCourse = parseCourse(msg);
+                    courses.Add(curCourse);
                     id++;
                 }
             }

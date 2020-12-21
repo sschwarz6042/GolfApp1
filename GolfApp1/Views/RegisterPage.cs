@@ -25,6 +25,7 @@ namespace GolfApp1.Views
 
         public RegisterPage()
         {
+            this.BackgroundImageSource = "SharecardBase.png";
             StackLayout stackLayout = new StackLayout();
 
             registerLabel = new Label();

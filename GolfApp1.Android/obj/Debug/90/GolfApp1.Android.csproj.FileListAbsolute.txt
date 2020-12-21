@@ -463,3 +463,5 @@ C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\stamp\_Conver
 C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\stamp\_GenerateJavaStubs.stamp
 C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\res\drawable\sharecardbase.png
+C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\res\drawable\sharecardtitle.png

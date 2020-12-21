@@ -20,6 +20,8 @@ namespace GolfApp1.Views
 
         public SplashScreenPage()
         {
+            this.BackgroundImageSource = "SharecardTitle.png"; 
+            
             StackLayout stackLayout = new StackLayout();
 
             spacer = new Label();
@@ -78,44 +80,54 @@ namespace GolfApp1.Views
             bool finishedChecking = false;
             string msg;
 
-            while (!finishedChecking)
+            if (email != "" && password != "")
             {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(address + userID);
-                msg = await response.Content.ReadAsStringAsync();
-                if (msg.Contains("\"email\": \"" + email + "\"") && msg.Contains("\"password\": \"" + password + "\""))
+                while (!finishedChecking)
                 {
-                    userFound = true;
-                    finishedChecking = true;
-                }
-                else
-                {
-                    if (msg.Contains("message") && msg.Contains("Could Not Find That User"))
+                    HttpClient client = new HttpClient();
+                    HttpResponseMessage response = await client.GetAsync(address + userID);
+                    msg = await response.Content.ReadAsStringAsync();
+                    if (msg.Contains("\"email\": \"" + email + "\"") && msg.Contains("\"password\": \"" + password + "\""))
                     {
+                        userFound = true;
                         finishedChecking = true;
                     }
                     else
                     {
-                        userID++;
+                        if (msg.Contains("message") && msg.Contains("Could Not Find That User"))
+                        {
+                            finishedChecking = true;
+                        }
+                        else
+                        {
+                            userID++;
+                        }
                     }
                 }
-            }
 
-            emailEntry.Text = "";
-            passwordEntry.Text = "";
-            if (userFound)
-            {
-                //await DisplayAlert("Success", "User Found In DB", "OK");
-                await Navigation.PushAsync(new DashboardPage());
-                var pages = Navigation.NavigationStack.ToList();
-                foreach (var page in pages) {
-                    if (page.GetType() != typeof(DashboardPage)) {
-                        Navigation.RemovePage(page);
+
+                emailEntry.Text = "";
+                passwordEntry.Text = "";
+                if (userFound)
+                {
+                    //await DisplayAlert("Success", "User Found In DB", "OK");
+                    await Navigation.PushAsync(new DashboardPage());
+                    var pages = Navigation.NavigationStack.ToList();
+                    foreach (var page in pages)
+                    {
+                        if (page.GetType() != typeof(DashboardPage))
+                        {
+                            Navigation.RemovePage(page);
+                        }
                     }
+                }
+                else
+                {
+                    await DisplayAlert("ERROR", "User Not Found In DB", "OK");
                 }
             }
             else {
-                await DisplayAlert("ERROR", "User Not Found In DB", "OK");
+                await DisplayAlert("ERROR", "Enter a username and password", "OK");
             }
         }
 

@@ -11,6 +11,7 @@ namespace GolfApp1.Views
     {
         public NewRoundPage()
         {
+            this.BackgroundImageSource = "SharecardBase.png";
             Content = new StackLayout
             {
                 Children = {
