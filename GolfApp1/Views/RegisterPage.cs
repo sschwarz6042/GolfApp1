@@ -72,7 +72,7 @@ namespace GolfApp1.Views
         private async void RegisterButton_ClickedAsync(object sender, EventArgs e)
         {
             string email = emailEntry.Text;
-            await checkEmails(email);
+            //await checkEmails(email);
             if (emailFound)
             {
                 emailEntry.Text = "";
@@ -97,17 +97,17 @@ namespace GolfApp1.Views
             };
 
                 //Find next Empty Slot
-                await findEmptyID();
+                //await findEmptyID();
 
                 HttpClient client = new HttpClient();
                 HttpContent content = new FormUrlEncodedContent(userData);
-                HttpResponseMessage response = await client.PutAsync(address + nextID, content);
+                HttpResponseMessage response = await client.PutAsync(address, content);
 
                 emailEntry.Text = "";
                 nickNameEntry.Text = "";
                 handiCapEntry.Text = "";
                 passwordEntry.Text = "";
-                await DisplayAlert("Account Created", "Your Account Was Created Successfully, User ID = " + nextID, "Ok");
+                await DisplayAlert("Account Created", "Your Account Was Created Successfully", "Ok");
                 await Navigation.PushAsync(new DashboardPage());
                 var pages = Navigation.NavigationStack.ToList();
                 foreach (var page in pages)
@@ -130,7 +130,7 @@ namespace GolfApp1.Views
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(address + nextID);
                 msg = await response.Content.ReadAsStringAsync();
-                //await DisplayAlert("Checking ID", "Checking " + nextID +"\n" + msg, "Ok");
+                await DisplayAlert("Checking ID", "Checking " + nextID +"\n" + msg, "Ok");
 
                 if (msg.Contains("message") && msg.Contains("Could Not Find That User"))
                 {
@@ -152,6 +152,7 @@ namespace GolfApp1.Views
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(address + userID);
                 msg = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Checking ID", "Checking " + nextID + "\n" + msg, "Ok");
                 if (msg.Contains("\"email\": \"" + email + "\""))
                 {
                     emailFound = true;
