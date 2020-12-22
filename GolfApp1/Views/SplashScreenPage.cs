@@ -130,6 +130,10 @@ namespace GolfApp1.Views
                 await DisplayAlert("ERROR", "Enter a username and password", "OK");
             }
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Send(this, "PreventLandscape");
+        }
     }
 }

@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Xamarin.Forms;
+using GolfApp1.Views;
 
 namespace GolfApp1.Droid
 {
@@ -14,6 +16,16 @@ namespace GolfApp1.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            MessagingCenter.Subscribe<NewRoundPage>(this, "PreventPortrait", sender =>
+            {
+                RequestedOrientation = ScreenOrientation.Landscape;
+            });
+
+            MessagingCenter.Subscribe<NewRoundPage>(this, "PreventLandscape", sender =>
+            {
+                RequestedOrientation = ScreenOrientation.Portrait;
+            });
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

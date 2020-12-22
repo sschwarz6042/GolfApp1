@@ -65,7 +65,7 @@ namespace GolfApp1.Views
 
         private async void StartButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NewRoundPage());
+            await Navigation.PushAsync(new NewRoundPage(this.coursePicker.SelectedIndex));
             var pages = Navigation.NavigationStack.ToList();
             foreach (var page in pages)
             {
