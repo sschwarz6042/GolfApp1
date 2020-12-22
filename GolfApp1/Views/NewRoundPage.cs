@@ -1,6 +1,8 @@
-﻿using System;
+﻿using GolfApp1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 
 using Xamarin.Forms;
@@ -10,6 +12,9 @@ namespace GolfApp1.Views
     public class NewRoundPage : ContentPage
     {
         private int courseNum = 0;
+        private string address = "https://golfserversws6042.herokuapp.com/course/";
+        private Course myCourse;
+
         private myLabel baseLabel;
         private HandicapStrokeLabel handicapLabel;
         private SpecialStrokeLabel specialLabel;
@@ -133,6 +138,9 @@ namespace GolfApp1.Views
                 this.FontAttributes = FontAttributes.Bold;
                 this.FontSize = 25;
                 this.Text = "0";
+                this.Keyboard = Keyboard.Numeric;
+                this.MaxLength = 2;
+                this.VerticalOptions = LayoutOptions.Center;
             }
         }
         public class HandicapStrokeLabel : Label
@@ -426,6 +434,28 @@ namespace GolfApp1.Views
         {
             base.OnDisappearing();
             MessagingCenter.Send(this, "PreventLandscape");
+        }
+
+        private async void updateCourseValues() {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(address + courseNum);
+            string msg = await response.Content.ReadAsStringAsync();
+
+            myCourse = parseCourse(msg);
+        
+        }
+
+        private Course parseCourse(string msg)
+        {
+            Course ans = new Course();
+
+            
+
+
+
+
+
+            return ans;
         }
     }
 }
