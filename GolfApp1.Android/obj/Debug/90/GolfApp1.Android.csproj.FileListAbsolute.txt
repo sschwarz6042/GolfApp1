@@ -465,3 +465,7 @@ C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\stamp\_Genera
 C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
 C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\res\drawable\sharecardbase.png
 C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\res\drawable\sharecardtitle.png
+C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\android\assets\Rg.Plugins.Popup.dll
+C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\android\assets\Rg.Plugins.Popup.pdb
+C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\android\src\crc643dd37f507f3d9710\PopupPageRenderer.java
+C:\Users\steve\source\repos\GolfApp1\GolfApp1.Android\obj\Debug\90\android\src\crc64fdbeeba101bd56dc\RgGestureDetectorListener.java

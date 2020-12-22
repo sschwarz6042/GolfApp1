@@ -7,8 +7,8 @@ C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\App.xaml.
 C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
 C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\GolfApp1.AssemblyInfoInputs.cache
 C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\GolfApp1.AssemblyInfo.cs
-C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\GolfApp1.csproj.CoreCompileInputs.cache
-C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\GolfApp1.dll
 C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\ref\GolfApp1.dll
 C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\GolfApp1.pdb
+C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\GolfApp1.csproj.CoreCompileInputs.cache
+C:\Users\steve\source\repos\GolfApp1\GolfApp1\obj\Debug\netstandard2.0\XamlC.stamp

@@ -5,6 +5,7 @@ public class MonoPackageManager_Resources {
 		"GolfApp1.Android.dll",
 		"FormsViewGroup.dll",
 		"GolfApp1.dll",
+		"Rg.Plugins.Popup.dll",
 		"Xamarin.Android.Arch.Core.Common.dll",
 		"Xamarin.Android.Arch.Core.Runtime.dll",
 		"Xamarin.Android.Arch.Lifecycle.Common.dll",

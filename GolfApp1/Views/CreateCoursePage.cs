@@ -12,6 +12,7 @@ namespace GolfApp1.Views
     {
         private string address = "https://golfserversws6042.herokuapp.com/course/";
         private int nextID = 0;
+        private myLabel BlankLabel;
         private myLabel nameLabel;
         private myEntry nameEntry;
         private myLabel parLabel;
@@ -327,9 +328,17 @@ namespace GolfApp1.Views
             grid.Children.Add(h18hcEntry, 3, 18);
 
             createCourseButton = new Button();
-            createCourseButton.Text = "Create Course";
+            createCourseButton.Text = "Create";
             createCourseButton.Clicked += CreateCourseButton_Clicked;
             grid.Children.Add(createCourseButton, 2, 19);
+
+            BlankLabel = new myLabel();
+            BlankLabel.Text = "";
+            grid.Children.Add(BlankLabel, 0, 20);
+            grid.Children.Add(BlankLabel, 0, 21);
+            grid.Children.Add(BlankLabel, 0, 22);
+            grid.Children.Add(BlankLabel, 0, 23);
+            grid.Children.Add(BlankLabel, 0, 24);
 
             scrollView.Content = grid;
             Content = scrollView;
@@ -382,7 +391,7 @@ namespace GolfApp1.Views
             //await findEmptyID();
             HttpClient client = new HttpClient();
             HttpContent content = new FormUrlEncodedContent(courseData);
-            HttpResponseMessage response = await client.PutAsync(address, content);
+            HttpResponseMessage response = await client.PutAsync(address + 0, content);
             await DisplayAlert("Course Created", "Your Course Was Created Successfully", "Ok");
             await Navigation.PushAsync(new DashboardPage());
             var pages = Navigation.NavigationStack.ToList();

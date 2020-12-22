@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wPG93nYNDsyaTB4SaCCP3/QaxPOE06hNfbctEapqTke0q8woJcsZQ6GmReCzXelV9t3JLR0VlJVjZgTrKL1o9Q==",
+  "dgSpecHash": "YmNJl2a9w5Wr5nSrQe4zRLdStWwQ2lhJt96uxggBpi6MkTharTpyVHvKf3OQ5DD6HmzYsZOtdiVd+etcdr9mXQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\steve\\source\\repos\\GolfApp1\\GolfApp1.iOS\\GolfApp1.iOS.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\steve\\.nuget\\packages\\rg.plugins.popup\\2.0.0.9\\rg.plugins.popup.2.0.0.9.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
   ],

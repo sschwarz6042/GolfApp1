@@ -101,7 +101,7 @@ namespace GolfApp1.Views
 
                 HttpClient client = new HttpClient();
                 HttpContent content = new FormUrlEncodedContent(userData);
-                HttpResponseMessage response = await client.PutAsync(address, content);
+                HttpResponseMessage response = await client.PutAsync(address + 0, content);
 
                 emailEntry.Text = "";
                 nickNameEntry.Text = "";

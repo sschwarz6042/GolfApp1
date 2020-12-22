@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "bx3YiKlr6nk3fKuuK82uWbw6mT5wNbAxEetRgyts7ZEVW8pOUm7+MahCf+mPFfltS9qJzLjEPWJt63KS1k6dcA==",
+  "dgSpecHash": "ozfrg/8Pa+ZxDbiltsJaea9Mlgy4f5Mtnj7IPpdunNLTl3ElHlv1UFkDNV8EmdV0uPTJLnrnZ6zPre2n7wYsUw==",
   "success": true,
   "projectFilePath": "C:\\Users\\steve\\source\\repos\\GolfApp1\\GolfApp1\\GolfApp1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\steve\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\steve\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\steve\\.nuget\\packages\\rg.plugins.popup\\2.0.0.9\\rg.plugins.popup.2.0.0.9.nupkg.sha512",
     "C:\\Users\\steve\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"

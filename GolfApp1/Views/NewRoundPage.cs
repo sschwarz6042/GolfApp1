@@ -12,12 +12,13 @@ namespace GolfApp1.Views
         public NewRoundPage()
         {
             this.BackgroundImageSource = "SharecardBase.png";
-            Content = new StackLayout
-            {
-                Children = {
-                    new Label { Text = "Welcome to Xamarin.Forms!" }
-                }
-            };
+            StackLayout stackLayout = new StackLayout();
+
+            this.RotateTo(90);
+
+
+
+            Content = stackLayout;
         }
     }
 }
