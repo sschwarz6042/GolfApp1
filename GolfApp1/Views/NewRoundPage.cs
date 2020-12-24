@@ -12,7 +12,10 @@ namespace GolfApp1.Views
     public class NewRoundPage : ContentPage
     {
         private int courseNum = 0;
-        private string address = "https://golfserversws6042.herokuapp.com/course/";
+        private int uid = 0;
+        private int sid = 0;
+        private string addressCourse = "https://golfserversws6042.herokuapp.com/course/";
+        private string addressScoreCard = "https://golfserversws6042.herokuapp.com/scorecard/";
         private Course myCourse;
 
         //private Button addPlayers;
@@ -168,9 +171,10 @@ namespace GolfApp1.Views
             }
         }
 
-        public NewRoundPage(int cNum)
+        public NewRoundPage(int cNum, int uNum)
         {
             this.courseNum = cNum;
+            this.uid = uNum;
             this.BackgroundImageSource = "SharecardBase.png";
             ScrollView scrollView = new ScrollView();
             scrollView.Orientation = ScrollOrientation.Horizontal;
@@ -282,6 +286,27 @@ namespace GolfApp1.Views
             h16rEntry = new RawEntry();
             h17rEntry = new RawEntry();
             h18rEntry = new RawEntry();
+
+            h1rEntry.TextChanged += H1rEntry_TextChanged;
+            h2rEntry.TextChanged += H2rEntry_TextChanged;
+            h3rEntry.TextChanged += H3rEntry_TextChanged;
+            h4rEntry.TextChanged += H4rEntry_TextChanged;
+            h5rEntry.TextChanged += H5rEntry_TextChanged;
+            h6rEntry.TextChanged += H6rEntry_TextChanged;
+            h7rEntry.TextChanged += H7rEntry_TextChanged;
+            h8rEntry.TextChanged += H8rEntry_TextChanged;
+            h9rEntry.TextChanged += H9rEntry_TextChanged;
+            h10rEntry.TextChanged += H10rEntry_TextChanged;
+            h11rEntry.TextChanged += H11rEntry_TextChanged;
+            h12rEntry.TextChanged += H12rEntry_TextChanged;
+            h13rEntry.TextChanged += H13rEntry_TextChanged;
+            h14rEntry.TextChanged += H14rEntry_TextChanged;
+            h15rEntry.TextChanged += H15rEntry_TextChanged;
+            h16rEntry.TextChanged += H16rEntry_TextChanged;
+            h17rEntry.TextChanged += H17rEntry_TextChanged;
+            h18rEntry.TextChanged += H18rEntry_TextChanged;
+
+
             h1hcEntry = new HandicapStrokeLabel();
             h2hcEntry = new HandicapStrokeLabel();
             h3hcEntry = new HandicapStrokeLabel();
@@ -447,7 +472,7 @@ namespace GolfApp1.Views
 
         private async Task updateCourseValues() {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(address + courseNum);
+            HttpResponseMessage response = await client.GetAsync(addressCourse + courseNum);
             string msg = await response.Content.ReadAsStringAsync();
 
             //await DisplayAlert("MSG: ", msg, "Ok");
@@ -782,6 +807,295 @@ namespace GolfApp1.Views
             ans.h18hc = newh18hc;
 
             return ans;
+        }
+
+        private async void H1rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h1r", h1rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H2rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h2r", h2rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H3rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h3r", h3rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H4rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h4r", h4rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H5rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h5r", h5rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H6rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h6r", h6rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H7rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h7r", h7rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H8rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h8r", h8rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H9rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h9r", h9rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H10rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h10r", h10rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H11rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h11r", h11rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H12rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h12r", h12rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H13rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h13r", h13rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H14rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h14r", h14rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H15rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h15r", h15rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H16rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h16r", h16rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H17rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h17r", h17rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
+        }
+        private async void H18rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("h18r", h18rEntry.Text)
+            };
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(updateData);
+
+            HttpMethod method = new HttpMethod("PATCH");
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            {
+                Content = content
+            };
+
+            HttpResponseMessage response = await client.SendAsync(request);
         }
     }
 }

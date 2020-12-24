@@ -17,6 +17,7 @@ namespace GolfApp1.Views
         private Label regLabel;
         private Button registerButton;
         private string address = "https://golfserversws6042.herokuapp.com/user/";
+        private int uid = 0;
 
         public SplashScreenPage()
         {
@@ -91,6 +92,7 @@ namespace GolfApp1.Views
                     {
                         userFound = true;
                         finishedChecking = true;
+                        uid = userID;
                     }
                     else
                     {
@@ -111,7 +113,7 @@ namespace GolfApp1.Views
                 if (userFound)
                 {
                     //await DisplayAlert("Success", "User Found In DB", "OK");
-                    await Navigation.PushAsync(new DashboardPage());
+                    await Navigation.PushAsync(new DashboardPage(uid));
                     var pages = Navigation.NavigationStack.ToList();
                     foreach (var page in pages)
                     {
