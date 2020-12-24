@@ -65,6 +65,7 @@ namespace GolfApp1.Views
 
         private async void StartButton_Clicked(object sender, EventArgs e)
         {
+            //await Navigation.PushAsync(new NewRoundPage(0));
             await Navigation.PushAsync(new NewRoundPage(this.coursePicker.SelectedIndex));
             var pages = Navigation.NavigationStack.ToList();
             foreach (var page in pages)
@@ -134,7 +135,7 @@ namespace GolfApp1.Views
                         }
                     }
                     else {
-                        await DisplayAlert("ERROR", "Indexes not correct", "Ok");
+                        //await DisplayAlert("ERROR", "Indexes not correct", "Ok");
                     }
                     id++;
                 }

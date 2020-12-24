@@ -11,8 +11,8 @@ namespace GolfApp1
         {
             InitializeComponent();
 
-            //MainPage = new NavigationPage(new SplashScreenPage());
-            MainPage = new NavigationPage(new NewRoundPage(0));
+            MainPage = new NavigationPage(new SplashScreenPage());
+            //MainPage = new NavigationPage(new NewRoundPage(0));
         }
 
         protected override void OnStart()

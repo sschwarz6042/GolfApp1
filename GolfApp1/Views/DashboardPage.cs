@@ -87,14 +87,14 @@ namespace GolfApp1.Views
         private async void CreateCourseButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CreateCoursePage());
-            var pages = Navigation.NavigationStack.ToList();
-            foreach (var page in pages)
-            {
-                if (page.GetType() != typeof(CreateCoursePage))
-                {
-                    Navigation.RemovePage(page);
-                }
-            }
+            //var pages = Navigation.NavigationStack.ToList();
+            //foreach (var page in pages)
+            //{
+            //    if (page.GetType() != typeof(CreateCoursePage))
+            //    {
+            //        Navigation.RemovePage(page);
+            //    }
+            //}
 
         }
     }

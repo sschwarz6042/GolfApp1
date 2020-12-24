@@ -72,7 +72,7 @@ namespace GolfApp1.Views
         private async void RegisterButton_ClickedAsync(object sender, EventArgs e)
         {
             string email = emailEntry.Text;
-            //await checkEmails(email);
+            await checkEmails(email);
             if (emailFound)
             {
                 emailEntry.Text = "";
