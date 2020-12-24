@@ -16,7 +16,8 @@ namespace GolfApp1.Views
         private string addressScoreCard = "https://golfserversws6042.herokuapp.com/scorecard/";
         private Course myCourse;
 
-        //private Button addPlayers;
+        private Button addPlayersButton;
+        private Button viewLeaderBoardButton;
 
         private myLabel baseLabel;
         private HandicapStrokeLabel handicapLabel;
@@ -176,7 +177,6 @@ namespace GolfApp1.Views
             ScrollView scrollView = new ScrollView();
             scrollView.Orientation = ScrollOrientation.Horizontal;
             Grid grid = new Grid();
-            //this.RotateTo(90);
 
             holeLabel = new myLabel();
             h1Label = new myLabel();
@@ -348,6 +348,17 @@ namespace GolfApp1.Views
             int handicapRow = rawRow + 1;
             int specialRow = handicapRow + 1;
 
+            addPlayersButton = new Button();
+            addPlayersButton.Text = "Add Players";
+            addPlayersButton.Clicked += AddPlayersButton_Clicked;
+
+            viewLeaderBoardButton = new Button();
+            viewLeaderBoardButton.Text = "View LeaderBoard";
+            viewLeaderBoardButton.Clicked += ViewLeaderBoardButton_Clicked;
+
+            grid.Children.Add(addPlayersButton, 0, optionsRow);
+            grid.Children.Add(viewLeaderBoardButton, 1, optionsRow);
+
             grid.Children.Add(holeLabel, 0, holeRow);
             grid.Children.Add(h1Label, 1, holeRow);
             grid.Children.Add(h2Label, 2, holeRow);
@@ -453,6 +464,39 @@ namespace GolfApp1.Views
 
             scrollView.Content = grid;
             Content = scrollView;
+        }
+
+        private async void ViewLeaderBoardButton_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("UserCount", "This Game has " + (sd.watchingPlayers.Count + 1) + " players", "Ok");
+            if (sd.watchingPlayers.Count == 0)
+            {
+                await DisplayAlert("ERROR", "Add users to see the scoreboard", "Ok");
+            }
+            else {
+                await Navigation.PushAsync(new ViewLeaderBoardPage(sd));
+                var pages = Navigation.NavigationStack.ToList();
+                foreach (var page in pages)
+                {
+                    if (page.GetType() != typeof(ViewLeaderBoardPage))
+                    {
+                        Navigation.RemovePage(page);
+                    }
+                }
+            }
+        }
+
+        private async void AddPlayersButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AddPlayersPage(sd));
+            var pages = Navigation.NavigationStack.ToList();
+            foreach (var page in pages)
+            {
+                if (page.GetType() != typeof(AddPlayersPage))
+                {
+                    Navigation.RemovePage(page);
+                }
+            }
         }
 
         protected override async void OnAppearing()
