@@ -16,11 +16,11 @@ namespace GolfApp1.Views
         private Button newRoundButton;
         private List<Course> courses = new List<Course>();
         private string address = "https://golfserversws6042.herokuapp.com/course/";
-        private int uid;
+        private SessionData sd;
 
-        public DashboardPage(int userNum)
+        public DashboardPage(SessionData sessionData)
         {
-            this.uid = userNum;
+            this.sd = sessionData;
             this.BackgroundImageSource = "SharecardBase.png";
             StackLayout stackLayout = new StackLayout();
 
@@ -45,7 +45,7 @@ namespace GolfApp1.Views
 
             if (courses.Count > 0)
             {
-                await Navigation.PushAsync(new SelectOptionsPopup(uid));
+                await Navigation.PushAsync(new SelectOptionsPopup(sd));
             }
             else {
                 await DisplayAlert("ERROR", "No courses found in database\nCreate a new course", "Ok");
@@ -88,7 +88,7 @@ namespace GolfApp1.Views
 
         private async void CreateCourseButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CreateCoursePage(uid));
+            await Navigation.PushAsync(new CreateCoursePage(sd));
             //var pages = Navigation.NavigationStack.ToList();
             //foreach (var page in pages)
             //{

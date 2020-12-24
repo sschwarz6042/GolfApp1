@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GolfApp1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -17,10 +18,11 @@ namespace GolfApp1.Views
         private Label regLabel;
         private Button registerButton;
         private string address = "https://golfserversws6042.herokuapp.com/user/";
-        private int uid = 0;
+        private SessionData sd;
 
         public SplashScreenPage()
         {
+            this.sd = new SessionData();
             this.BackgroundImageSource = "SharecardTitle.png"; 
             
             StackLayout stackLayout = new StackLayout();
@@ -68,7 +70,7 @@ namespace GolfApp1.Views
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RegisterPage());
+            await Navigation.PushAsync(new RegisterPage(sd));
         }
 
         private async void LoginButton_ClickedAsync(object sender, EventArgs e)
@@ -92,7 +94,7 @@ namespace GolfApp1.Views
                     {
                         userFound = true;
                         finishedChecking = true;
-                        uid = userID;
+                        sd.userID = userID;
                     }
                     else
                     {
@@ -113,7 +115,7 @@ namespace GolfApp1.Views
                 if (userFound)
                 {
                     //await DisplayAlert("Success", "User Found In DB", "OK");
-                    await Navigation.PushAsync(new DashboardPage(uid));
+                    await Navigation.PushAsync(new DashboardPage(sd));
                     var pages = Navigation.NavigationStack.ToList();
                     foreach (var page in pages)
                     {

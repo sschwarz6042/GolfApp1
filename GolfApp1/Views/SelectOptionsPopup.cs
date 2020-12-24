@@ -1,4 +1,5 @@
-﻿using Rg.Plugins.Popup.Pages;
+﻿using GolfApp1.Models;
+using Rg.Plugins.Popup.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace GolfApp1.Views
         private StackLayout stackLayout = new StackLayout();
         private Grid grid = new Grid();
         private static int fSize = 25;
-        private int uid;
+        private SessionData sd;
 
         public class myLabel : Label
         {
@@ -34,9 +35,9 @@ namespace GolfApp1.Views
             }
         }
 
-        public SelectOptionsPopup(int userNum)
+        public SelectOptionsPopup(SessionData sessionData)
         {
-            this.uid = userNum;
+            this.sd = sessionData;
             this.BackgroundImageSource = "SharecardBase.png";
             courseLabel = new myLabel();
             courseLabel.Text = "Select a Course:";
@@ -68,7 +69,8 @@ namespace GolfApp1.Views
         private async void StartButton_Clicked(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new NewRoundPage(0));
-            await Navigation.PushAsync(new NewRoundPage(this.coursePicker.SelectedIndex, uid));
+            sd.courseID = this.coursePicker.SelectedIndex;
+            await Navigation.PushAsync(new NewRoundPage(sd));
             var pages = Navigation.NavigationStack.ToList();
             foreach (var page in pages)
             {

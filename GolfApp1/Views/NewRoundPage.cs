@@ -11,9 +11,7 @@ namespace GolfApp1.Views
 {
     public class NewRoundPage : ContentPage
     {
-        private int courseNum = 0;
-        private int uid = 0;
-        private int sid = 0;
+        private SessionData sd;
         private string addressCourse = "https://golfserversws6042.herokuapp.com/course/";
         private string addressScoreCard = "https://golfserversws6042.herokuapp.com/scorecard/";
         private Course myCourse;
@@ -171,10 +169,9 @@ namespace GolfApp1.Views
             }
         }
 
-        public NewRoundPage(int cNum, int uNum)
+        public NewRoundPage(SessionData sessionData)
         {
-            this.courseNum = cNum;
-            this.uid = uNum;
+            this.sd = sessionData;
             this.BackgroundImageSource = "SharecardBase.png";
             ScrollView scrollView = new ScrollView();
             scrollView.Orientation = ScrollOrientation.Horizontal;
@@ -472,7 +469,7 @@ namespace GolfApp1.Views
 
         private async Task updateCourseValues() {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(addressCourse + courseNum);
+            HttpResponseMessage response = await client.GetAsync(addressCourse + sd.courseID);
             string msg = await response.Content.ReadAsStringAsync();
 
             //await DisplayAlert("MSG: ", msg, "Ok");
@@ -818,7 +815,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -834,7 +831,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -850,7 +847,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -866,7 +863,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -882,7 +879,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -898,7 +895,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -914,7 +911,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -930,7 +927,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -946,7 +943,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -962,7 +959,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -978,7 +975,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -994,7 +991,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -1010,7 +1007,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -1026,7 +1023,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -1042,7 +1039,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -1058,7 +1055,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -1074,7 +1071,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };
@@ -1090,7 +1087,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(updateData);
 
             HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sid)
+            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
             {
                 Content = content
             };

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GolfApp1.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -23,10 +24,11 @@ namespace GolfApp1.Views
         private int nextID = 0;
         private string addressUser = "https://golfserversws6042.herokuapp.com/user/";
         private string addressScoreCard = "https://golfserversws6042.herokuapp.com/scorecard/";
+        private SessionData sd;
 
-
-        public RegisterPage()
+        public RegisterPage(SessionData sessionData)
         {
+            this.sd = sessionData;
             this.BackgroundImageSource = "SharecardBase.png";
             StackLayout stackLayout = new StackLayout();
 
@@ -174,10 +176,12 @@ namespace GolfApp1.Views
                 nickNameEntry.Text = "";
                 handiCapEntry.Text = "";
                 passwordEntry.Text = "";
-                                    
-                
+
+
+                this.sd.userID = nextID;
+                this.sd.scoreCardID = nextID;
                 await DisplayAlert("Account Created", "Your Account Was Created Successfully", "Ok");
-                await Navigation.PushAsync(new DashboardPage(nextID));
+                await Navigation.PushAsync(new DashboardPage(sd));
                 var pages = Navigation.NavigationStack.ToList();
                 foreach (var page in pages)
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GolfApp1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -12,7 +13,7 @@ namespace GolfApp1.Views
     {
         private string address = "https://golfserversws6042.herokuapp.com/course/";
         private int nextID = 0;
-        private int uid = 0;
+        private SessionData sd;
         private myLabel BlankLabel;
         private myLabel nameLabel;
         private myEntry nameEntry;
@@ -109,9 +110,9 @@ namespace GolfApp1.Views
             }
         }
 
-        public CreateCoursePage(int userNum)
+        public CreateCoursePage(SessionData sessionData)
         {
-            this.uid = userNum;
+            this.sd = sessionData;
             this.BackgroundImageSource = "SharecardBase.png";
             ScrollView scrollView = new ScrollView();
             Grid grid = new Grid();
@@ -395,7 +396,7 @@ namespace GolfApp1.Views
             HttpContent content = new FormUrlEncodedContent(courseData);
             HttpResponseMessage response = await client.PutAsync(address + nextID, content);
             await DisplayAlert("Course Created", "Your Course Was Created Successfully", "Ok");
-            await Navigation.PushAsync(new DashboardPage(uid));
+            await Navigation.PushAsync(new DashboardPage(sd));
             var pages = Navigation.NavigationStack.ToList();
             foreach (var page in pages)
             {
