@@ -1,8 +1,8 @@
-﻿using GolfApp1.Models;
+﻿using GolfApp1.Helpers;
+using GolfApp1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,13 +12,7 @@ namespace GolfApp1.Views
     public class AddPlayersPage : ContentPage
     {
         private SessionData sd;
-        private User currentUser = new User();
-        private ScoreCard currentCard = new ScoreCard();
 
-        private int selected;
-
-        private string userAddress = "https://golfserversws6042.herokuapp.com/user/";
-        private string scoreCardAddress = "https://golfserversws6042.herokuapp.com/scorecard/";
         private Picker userPicker;
         private Button addUserButton;
         private Button backButton;
@@ -32,9 +26,7 @@ namespace GolfApp1.Views
 
             StackLayout stackLayout = new StackLayout();
 
-
             userPicker = new Picker();
-            userPicker.SelectedIndexChanged += UserPicker_SelectedIndexChanged;
 
             addUserButton = new Button();
             addUserButton.Text = "Add User";
@@ -52,118 +44,6 @@ namespace GolfApp1.Views
             Content = stackLayout;
         }
 
-        private async void UserPicker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (userPicker.Items.Count > 0)
-            {
-                string email = "";
-                string username = "";
-                int handicap = 0;
-                string password = "";
-
-                HttpClient client = new HttpClient();
-                selected = userPicker.SelectedIndex + 1;
-                HttpResponseMessage response = await client.GetAsync(userAddress + selected);
-                string msg = await response.Content.ReadAsStringAsync();
-
-                //await DisplayAlert("UserData", "User Data = " + msg, "Ok");
-
-                if (msg.Contains("message") && msg.Contains("Could Not Find That User"))
-                {
-                    await DisplayAlert("ERROR", "User Not Found", "Ok");
-                }
-                else
-                {
-                    string emailStart = "\"email\": \"";
-                    int startInd = msg.IndexOf(emailStart) + emailStart.Length;
-                    int endInd = msg.Substring(startInd).IndexOf("\", ");
-                    email = msg.Substring(startInd, endInd);
-                    //await DisplayAlert("Email", "Email = " + msg.Substring(startInd, endInd), "Ok");
-
-
-                    string usernameStart = "\"username\": \"";
-                    startInd = msg.IndexOf(usernameStart) + usernameStart.Length;
-                    endInd = msg.Substring(startInd).IndexOf("\", ");
-                    username = msg.Substring(startInd, endInd);
-                    //await DisplayAlert("Username", "Username = " + msg.Substring(startInd, endInd), "Ok");
-
-
-                    string handicapStart = "\"handicap\": ";
-                    startInd = msg.IndexOf(handicapStart) + handicapStart.Length;
-                    endInd = msg.Substring(startInd).IndexOf(",");
-                    //await DisplayAlert("Handicap", "Handicap = " + msg.Substring(startInd, endInd), "Ok");
-                    handicap = Int32.Parse(msg.Substring(startInd, endInd));
-
-
-                    currentUser = new User(userPicker.SelectedIndex + 1, email, username, handicap, password);
-                }
-
-                int id = userPicker.SelectedIndex + 1;
-                int uid = userPicker.SelectedIndex + 1;
-                int[] rawScores = new int[18];
-                int[] handicapScores = new int[18];
-                int[] specialScores = new int[18];
-
-                HttpClient client2 = new HttpClient();
-                selected = userPicker.SelectedIndex + 1;
-                HttpResponseMessage response2 = await client2.GetAsync(scoreCardAddress + selected);
-                string msg2 = await response2.Content.ReadAsStringAsync();
-
-
-                if (msg2.Contains("message") && msg2.Contains("Could Not Find That ScoreCard"))
-                {
-                    await DisplayAlert("ERROR", "ScoreCard Not Found", "Ok");
-                }
-                else
-                {
-                    //await DisplayAlert("ScoreCardData", "ScoreCardData = " + msg2, "Ok");
-
-                    int hNum = 0;
-                    for (int i = 0; i < rawScores.Length; i++)
-                    {
-                        hNum = (i + 1);
-                        string rawStart = "\"h" + hNum + "r\": ";
-                        int startInd = msg2.IndexOf(rawStart) + rawStart.Length;
-                        int endInd = msg2.Substring(startInd).IndexOf(",");
-
-                        //await DisplayAlert("Raw Score " + hNum, "RScore = " + msg2.Substring(startInd, endInd), "Ok");
-                        rawScores[i] = Int32.Parse(msg2.Substring(startInd, endInd));
-
-                        string hcStart = "\"h" + hNum + "hc\": ";
-                        startInd = msg2.IndexOf(hcStart) + hcStart.Length;
-                        endInd = msg2.Substring(startInd).IndexOf(",");
-
-                        //await DisplayAlert("Handicap Score " + hNum, "HScore = " + msg2.Substring(startInd, endInd), "Ok");
-                        handicapScores[i] = Int32.Parse(msg2.Substring(startInd, endInd));
-
-
-                        string specialStart = "\"h" + hNum + "sp\": ";
-                        startInd = msg2.IndexOf(specialStart) + specialStart.Length;
-                        if (hNum != 18)
-                        {
-                            endInd = msg2.Substring(startInd).IndexOf(",");
-                        }
-                        else
-                        {
-                            endInd = msg2.Substring(startInd).IndexOf("}");
-                        }
-
-                        //await DisplayAlert("Special Score " + hNum, "SScore = " + msg2.Substring(startInd, endInd), "Ok");
-                        specialScores[i] = Int32.Parse(msg2.Substring(startInd, endInd));
-                    }
-
-                    currentCard = new ScoreCard();
-                    currentCard.id = id;
-                    currentCard.uid = uid;
-                    currentCard.rawScores = rawScores;
-                    currentCard.handicapScores = handicapScores;
-                    currentCard.specialScores = specialScores;
-                    currentCard.calcFinals();
-                }
-            }
-
-        }
-
         private async void BackButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new NewRoundPage(sd));
@@ -179,77 +59,98 @@ namespace GolfApp1.Views
 
         private async void AddUserButton_Clicked(object sender, EventArgs e)
         {
-            sd.watchingPlayers.Add(currentUser);
-            sd.watchingScoreCards.Add(currentCard);
+            //sd.watchingUsers.Add(userPicker.ItemsSource[userPicker.SelectedIndex] as User);
 
-            await DisplayAlert("Success", "User: " + sd.watchingPlayers.ElementAt(sd.watchingPlayers.Count-1).username + " Added", "Ok");
+            User selected = userPicker.SelectedItem as User;
+            await DisplayAlert("User Added", "Added " + selected.username, "Ok");
+            sd.watchingUsers.Add(selected);
 
-            //Update picker without the selected ID
-            userPicker.Items.Remove(userPicker.Items.ElementAt(userPicker.SelectedIndex));
-            //grid.Children.Remove(userPicker);
-            //await updateUserList();
-            //grid.Children.Add(userPicker, 0, 0);
+
+            await updateUserPicker();
+            userPicker.SelectedIndex = 0;
+
+            int adjustedHandicap = calculateHandicaps();
+            await updateScoreCardWithHandicaps(adjustedHandicap);
         }
 
         protected async override void OnAppearing()
         {
-            grid.Children.Remove(userPicker);
-            await updateUserList();
-            grid.Children.Add(userPicker, 0, 0);
+            await updateUserPicker();
         }
 
-        private async Task updateUserList()
+        private async Task<bool> updateScoreCardWithHandicaps(int h)
         {
-            int id = 0;
-            bool finishedChecking = false;
-            string msg;
-
-            userPicker.Items.Clear();
-
-            while (!finishedChecking)
+            List<KeyValuePair<string, string>> ans = new List<KeyValuePair<string, string>>();
+            if (h > 0)
             {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(userAddress + id);
-                msg = await response.Content.ReadAsStringAsync();
-                //await DisplayAlert("Checking ID", "Checking " + id + "\n" + msg, "Ok");
-
-                if (msg.Contains("message") && msg.Contains("Could Not Find That User"))
+                for (int i = 0; i < sd.currentCourse.handicaps.Length; i++)
                 {
-                    finishedChecking = true;
-                }
-                else
-                {
-                    string nameStart = "\"username\": \"";
-                    int startInd = msg.IndexOf(nameStart) + nameStart.Length;
-                    int endInd = msg.Substring(startInd).IndexOf("\", ");
-                    if (startInd > 0 && endInd > 0)
+                    await DisplayAlert("Updating Handicaps", "Hole = " + (i + 1) + " Hole Handicap = " + sd.currentCourse.handicaps[i] + " Adjusted Handicap = " + h, "Ok");
+                    if (h >= sd.currentCourse.handicaps[i])
                     {
-                        if (!(userPicker.Items.Contains(msg.Substring(startInd, endInd))))
-                        {
-                            if (id != sd.userID)
-                            {
-                                bool alreadyWatched = false;
-                                for (int i = 0; i < sd.watchingPlayers.Count; i++) { 
-                                    if(sd.watchingPlayers.ElementAt(i).id == id)
-                                    {
-                                        alreadyWatched = true;
-                                    }
-                                }
-                                if (!alreadyWatched) {
-                                    userPicker.Items.Add(msg.Substring(startInd, endInd));
-                                }
-                            }
-                        }
+                        sd.currentScoreCard.handicapScores[i] = (int)Math.Floor((decimal)sd.currentCourse.handicaps[i] / h);
+                        string holeString = "h" + i.ToString() + "hc";
+                        ans.Add(new KeyValuePair<string, string>(holeString, sd.currentScoreCard.handicapScores[i].ToString()));
                     }
-                    else
-                    {
-                        //await DisplayAlert("ERROR", "Indexes not correct", "Ok");
-                    }
-                    id++;
                 }
-
             }
+
+            await DBHelper.getInstance().updateScoreCardMultiple(sd.currentScoreCard.id, ans);
+
+            return true;
+        }
+
+        private int calculateHandicaps()
+        {
+            int maxHandicap = sd.currentUser.handicap;
+            for (int i = 0; i < sd.watchingUsers.Count; i++)
+            {
+                if (sd.watchingUsers.ElementAt(i).handicap > maxHandicap)
+                {
+                    maxHandicap = sd.watchingUsers.ElementAt(i).handicap;
+                }
+            }
+            return maxHandicap - sd.currentUser.handicap;
+        }
+
+        private async Task<bool> updateUserPicker()
+        {
+            grid.Children.Remove(userPicker);
+
+            List<User> users = await DBHelper.getInstance().getAllUsersAsync();
+            List<User> addAble = new List<User>();
+            for (int i = 0; i < users.Count; i++)
+            {
+                //await DisplayAlert("Current User", "Checking if user id " + users.ElementAt(i).id + " = current user " + sd.currentUser.id + ". Answer is" + (users.ElementAt(i).id == sd.currentUser.id), "Ok");
+                //await DisplayAlert("Current Course", "Checking if course id " + users.ElementAt(i).currentCourseID + " = current course id " + sd.currentUser.currentCourseID + ". Answer is" + (users.ElementAt(i).currentCourseID == sd.currentUser.currentCourseID), "Ok");
+                //await DisplayAlert("Already Watching", "Checking if user id " + users.ElementAt(i).id + " is already on the watch list. Answer is" + (alreadyWatching(users.ElementAt(i).id)), "Ok");
+
+
+                //if (users.ElementAt(i).id != sd.currentUser.id && users.ElementAt(i).currentCourseID == sd.currentCourse.id && users.ElementAt(i).loggedIn == "yes" && !(sd.watchingUsers.Contains(users.ElementAt(i))))
+                if (users.ElementAt(i).id != sd.currentUser.id && users.ElementAt(i).currentCourseID == sd.currentCourse.id && !(alreadyWatching(users.ElementAt(i).id)))
+                {
+                    addAble.Add(users.ElementAt(i));
+                }
+            }
+
+            userPicker.ItemsSource = addAble;
+            userPicker.ItemDisplayBinding = new Binding("username");
+
+            grid.Children.Add(userPicker, 0, 0);
             userPicker.SelectedIndex = 0;
+            return true;
+        }
+
+        private bool alreadyWatching(int checkIndex)
+        {
+            for (int i = 0; i < sd.watchingUsers.Count; i++)
+            {
+                if (sd.watchingUsers.ElementAt(i).id == checkIndex)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

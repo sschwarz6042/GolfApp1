@@ -1,8 +1,8 @@
-﻿using GolfApp1.Models;
+﻿using GolfApp1.Helpers;
+using GolfApp1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,14 +12,11 @@ namespace GolfApp1.Views
     public class NewRoundPage : ContentPage
     {
         private SessionData sd;
-        private string addressCourse = "https://golfserversws6042.herokuapp.com/course/";
-        private string addressScoreCard = "https://golfserversws6042.herokuapp.com/scorecard/";
-        private Course myCourse;
-
         private Button addPlayersButton;
         private Button viewLeaderBoardButton;
 
         private myLabel baseLabel;
+        private HandicapScoreLabel hScoreLabel;
         private HandicapStrokeLabel handicapLabel;
         private SpecialStrokeLabel specialLabel;
 
@@ -99,28 +96,48 @@ namespace GolfApp1.Views
         private HandicapStrokeLabel h16hcEntry = new HandicapStrokeLabel();
         private HandicapStrokeLabel h17hcEntry = new HandicapStrokeLabel();
         private HandicapStrokeLabel h18hcEntry = new HandicapStrokeLabel();
-        private SpecialStrokeLabel h1spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h2spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h3spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h4spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h5spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h6spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h7spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h8spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h9spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h10spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h11spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h12spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h13spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h14spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h15spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h16spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h17spEntry = new SpecialStrokeLabel();
-        private SpecialStrokeLabel h18spEntry = new SpecialStrokeLabel();
+        private SpecialStrokeEntry h1spEntry = new SpecialStrokeEntry(-1, "h1sp");
+        private SpecialStrokeEntry h2spEntry = new SpecialStrokeEntry(-1, "h2sp");
+        private SpecialStrokeEntry h3spEntry = new SpecialStrokeEntry(-1, "h3sp");
+        private SpecialStrokeEntry h4spEntry = new SpecialStrokeEntry(-1, "h4sp");
+        private SpecialStrokeEntry h5spEntry = new SpecialStrokeEntry(-1, "h5sp");
+        private SpecialStrokeEntry h6spEntry = new SpecialStrokeEntry(-1, "h6sp");
+        private SpecialStrokeEntry h7spEntry = new SpecialStrokeEntry(-1, "h7sp");
+        private SpecialStrokeEntry h8spEntry = new SpecialStrokeEntry(-1, "h8sp");
+        private SpecialStrokeEntry h9spEntry = new SpecialStrokeEntry(-1, "h9sp");
+        private SpecialStrokeEntry h10spEntry = new SpecialStrokeEntry(-1, "h10sp");
+        private SpecialStrokeEntry h11spEntry = new SpecialStrokeEntry(-1, "h11sp");
+        private SpecialStrokeEntry h12spEntry = new SpecialStrokeEntry(-1, "h12sp");
+        private SpecialStrokeEntry h13spEntry = new SpecialStrokeEntry(-1, "h13sp");
+        private SpecialStrokeEntry h14spEntry = new SpecialStrokeEntry(-1, "h14sp");
+        private SpecialStrokeEntry h15spEntry = new SpecialStrokeEntry(-1, "h15sp");
+        private SpecialStrokeEntry h16spEntry = new SpecialStrokeEntry(-1, "h16sp");
+        private SpecialStrokeEntry h17spEntry = new SpecialStrokeEntry(-1, "h17sp");
+        private SpecialStrokeEntry h18spEntry = new SpecialStrokeEntry(-1, "h18sp");
 
+        private HAdjustedScoreLabel h1adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h2adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h3adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h4adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h5adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h6adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h7adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h8adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h9adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h10adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h11adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h12adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h13adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h14adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h15adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h16adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h17adjEntry = new HAdjustedScoreLabel();
+        private HAdjustedScoreLabel h18adjEntry = new HAdjustedScoreLabel();
 
-        public class myLabel : Label {
-            public myLabel() {
+        public class myLabel : Label
+        {
+            public myLabel()
+            {
                 this.FontAttributes = FontAttributes.Bold;
                 this.FontSize = 25;
             }
@@ -136,8 +153,10 @@ namespace GolfApp1.Views
             }
         }
 
-        public class RawEntry : Entry{
-            public RawEntry() {
+        public class RawEntry : Entry
+        {
+            public RawEntry()
+            {
                 this.BackgroundColor = Color.White;
                 this.FontAttributes = FontAttributes.Bold;
                 this.FontSize = 25;
@@ -158,11 +177,71 @@ namespace GolfApp1.Views
                 this.Text = "0";
             }
         }
+        public class HandicapScoreLabel : Label
+        {
+            public HandicapScoreLabel()
+            {
+                //this.BackgroundColor = Color.White;
+                this.TextColor = Color.LightGoldenrodYellow;
+                this.FontAttributes = FontAttributes.Bold;
+                this.FontSize = 25;
+                this.Text = "0";
+            }
+        }
+        public class HAdjustedScoreLabel : Label
+        {
+            public HAdjustedScoreLabel()
+            {
+                //this.BackgroundColor = Color.White;
+                this.TextColor = Color.LightGoldenrodYellow;
+                this.FontAttributes = FontAttributes.Bold;
+                this.FontSize = 25;
+                this.Text = "0";
+            }
+        }
+        public class SpecialStrokeEntry : Entry
+        {
+            private int id;
+            private string name;
+            public SpecialStrokeEntry(int id, string name)
+            {
+                this.name = name;
+                this.BackgroundColor = Color.White;
+                this.TextColor = Color.SaddleBrown;
+                this.FontAttributes = FontAttributes.Bold;
+                this.FontSize = 25;
+                this.Text = "0";
+                this.TextChanged += SpecialStrokeEntry_TextChanged;
+            }
+
+            private async void SpecialStrokeEntry_TextChanged(object sender, TextChangedEventArgs e)
+            {
+                SpecialStrokeEntry s = sender as SpecialStrokeEntry;
+                await DBHelper.getInstance().updateScoreCard(s.getID(), s.getName(), s.Text);
+            }
+
+            public string getName()
+            {
+                return this.name;
+            }
+            public void setName(string n)
+            {
+                this.name = n;
+            }
+            public int getID()
+            {
+                return this.id;
+            }
+            public void setID(int i)
+            {
+                this.id = i;
+            }
+        }
+
         public class SpecialStrokeLabel : Label
         {
             public SpecialStrokeLabel()
             {
-                //this.BackgroundColor = Color.White;
                 this.TextColor = Color.SaddleBrown;
                 this.FontAttributes = FontAttributes.Bold;
                 this.FontSize = 25;
@@ -175,8 +254,10 @@ namespace GolfApp1.Views
             this.sd = sessionData;
             this.BackgroundImageSource = "SharecardBase.png";
             ScrollView scrollView = new ScrollView();
-            scrollView.Orientation = ScrollOrientation.Horizontal;
+            //scrollView.Orientation = ScrollOrientation.Horizontal;
+            scrollView.Orientation = ScrollOrientation.Both;
             Grid grid = new Grid();
+
 
             holeLabel = new myLabel();
             h1Label = new myLabel();
@@ -260,8 +341,10 @@ namespace GolfApp1.Views
 
             baseLabel = new myLabel();
             baseLabel.Text = "Score:";
+            hScoreLabel = new HandicapScoreLabel();
+            hScoreLabel.Text = "Handicap Strokes";
             handicapLabel = new HandicapStrokeLabel();
-            handicapLabel.Text = "Handicap Strokes:";
+            handicapLabel.Text = "Course Handicap:";
             specialLabel = new SpecialStrokeLabel();
             specialLabel.Text = "Beer Strokes:";
 
@@ -300,7 +383,7 @@ namespace GolfApp1.Views
             h14rEntry.TextChanged += H14rEntry_TextChanged;
             h15rEntry.TextChanged += H15rEntry_TextChanged;
             h16rEntry.TextChanged += H16rEntry_TextChanged;
-            h17rEntry.TextChanged += H17rEntry_TextChanged;
+            h17rEntry.TextChanged += H17rEntry_TextChangedAsync;
             h18rEntry.TextChanged += H18rEntry_TextChanged;
 
 
@@ -322,31 +405,52 @@ namespace GolfApp1.Views
             h16hcEntry = new HandicapStrokeLabel();
             h17hcEntry = new HandicapStrokeLabel();
             h18hcEntry = new HandicapStrokeLabel();
-            h1spEntry = new SpecialStrokeLabel();
-            h2spEntry = new SpecialStrokeLabel();
-            h3spEntry = new SpecialStrokeLabel();
-            h4spEntry = new SpecialStrokeLabel();
-            h5spEntry = new SpecialStrokeLabel();
-            h6spEntry = new SpecialStrokeLabel();
-            h7spEntry = new SpecialStrokeLabel();
-            h8spEntry = new SpecialStrokeLabel();
-            h9spEntry = new SpecialStrokeLabel();
-            h10spEntry = new SpecialStrokeLabel();
-            h11spEntry = new SpecialStrokeLabel();
-            h12spEntry = new SpecialStrokeLabel();
-            h13spEntry = new SpecialStrokeLabel();
-            h14spEntry = new SpecialStrokeLabel();
-            h15spEntry = new SpecialStrokeLabel();
-            h16spEntry = new SpecialStrokeLabel(); 
-            h17spEntry = new SpecialStrokeLabel();
-            h18spEntry = new SpecialStrokeLabel();
+
+            h1spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h1sp");
+            h2spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h2sp");
+            h3spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h3sp");
+            h4spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h4sp");
+            h5spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h5sp");
+            h6spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h6sp");
+            h7spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h7sp");
+            h8spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h8sp");
+            h9spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h9sp");
+            h10spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h10sp");
+            h11spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h11sp");
+            h12spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h12sp");
+            h13spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h13sp");
+            h14spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h14sp");
+            h15spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h15sp");
+            h16spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h16sp");
+            h17spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h17sp");
+            h18spEntry = new SpecialStrokeEntry(sd.currentScoreCard.id, "h18sp");
+
+            h1adjEntry = new HAdjustedScoreLabel();
+            h2adjEntry = new HAdjustedScoreLabel();
+            h3adjEntry = new HAdjustedScoreLabel();
+            h4adjEntry = new HAdjustedScoreLabel();
+            h5adjEntry = new HAdjustedScoreLabel();
+            h6adjEntry = new HAdjustedScoreLabel();
+            h7adjEntry = new HAdjustedScoreLabel();
+            h8adjEntry = new HAdjustedScoreLabel();
+            h9adjEntry = new HAdjustedScoreLabel();
+            h10adjEntry = new HAdjustedScoreLabel();
+            h11adjEntry = new HAdjustedScoreLabel();
+            h12adjEntry = new HAdjustedScoreLabel();
+            h13adjEntry = new HAdjustedScoreLabel();
+            h14adjEntry = new HAdjustedScoreLabel();
+            h15adjEntry = new HAdjustedScoreLabel();
+            h16adjEntry = new HAdjustedScoreLabel();
+            h17adjEntry = new HAdjustedScoreLabel();
+            h18adjEntry = new HAdjustedScoreLabel();
 
             int optionsRow = 0;
             int holeRow = optionsRow + 1;
             int parRow = holeRow + 1;
-            int rawRow = parRow + 1;
-            int handicapRow = rawRow + 1;
-            int specialRow = handicapRow + 1;
+            int handicapRow = parRow + 1;
+            int rawRow = handicapRow + 1;
+            int hScoreRow = rawRow + 1;
+            int specialRow = hScoreRow + 1;
 
             addPlayersButton = new Button();
             addPlayersButton.Text = "Add Players";
@@ -401,6 +505,7 @@ namespace GolfApp1.Views
             grid.Children.Add(p18Label, 18, parRow);
 
             grid.Children.Add(baseLabel, 0, rawRow);
+            grid.Children.Add(hScoreLabel, 0, hScoreRow);
             grid.Children.Add(handicapLabel, 0, handicapRow);
             grid.Children.Add(specialLabel, 0, specialRow);
 
@@ -442,6 +547,25 @@ namespace GolfApp1.Views
             grid.Children.Add(h17hcEntry, 17, handicapRow);
             grid.Children.Add(h18hcEntry, 18, handicapRow);
 
+            grid.Children.Add(h1adjEntry, 1, hScoreRow);
+            grid.Children.Add(h2adjEntry, 2, hScoreRow);
+            grid.Children.Add(h3adjEntry, 3, hScoreRow);
+            grid.Children.Add(h4adjEntry, 4, hScoreRow);
+            grid.Children.Add(h5adjEntry, 5, hScoreRow);
+            grid.Children.Add(h6adjEntry, 6, hScoreRow);
+            grid.Children.Add(h7adjEntry, 7, hScoreRow);
+            grid.Children.Add(h8adjEntry, 8, hScoreRow);
+            grid.Children.Add(h9adjEntry, 9, hScoreRow);
+            grid.Children.Add(h10adjEntry, 10, hScoreRow);
+            grid.Children.Add(h11adjEntry, 11, hScoreRow);
+            grid.Children.Add(h12adjEntry, 12, hScoreRow);
+            grid.Children.Add(h13adjEntry, 13, hScoreRow);
+            grid.Children.Add(h14adjEntry, 14, hScoreRow);
+            grid.Children.Add(h15adjEntry, 15, hScoreRow);
+            grid.Children.Add(h16adjEntry, 16, hScoreRow);
+            grid.Children.Add(h17adjEntry, 17, hScoreRow);
+            grid.Children.Add(h18adjEntry, 18, hScoreRow);
+
             grid.Children.Add(h1spEntry, 1, specialRow);
             grid.Children.Add(h2spEntry, 2, specialRow);
             grid.Children.Add(h3spEntry, 3, specialRow);
@@ -466,23 +590,114 @@ namespace GolfApp1.Views
             Content = scrollView;
         }
 
+        private async void H18rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h18r", h18rEntry.Text);
+        }
+
+        private async void H17rEntry_TextChangedAsync(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h17r", h17rEntry.Text);
+        }
+
+        private async void H16rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h16r", h16rEntry.Text);
+        }
+
+        private async void H15rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h15r", h15rEntry.Text);
+        }
+
+        private async void H14rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h14r", h14rEntry.Text);
+        }
+
+        private async void H13rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h13r", h13rEntry.Text);
+        }
+
+        private async void H12rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h12r", h12rEntry.Text);
+        }
+
+        private async void H11rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h11r", h11rEntry.Text);
+        }
+
+        private async void H10rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h10r", h10rEntry.Text);
+        }
+
+        private async void H9rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h9r", h9rEntry.Text);
+        }
+
+        private async void H8rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h8r", h8rEntry.Text);
+        }
+
+        private async void H7rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h7r", h7rEntry.Text);
+        }
+
+        private async void H6rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h6r", h6rEntry.Text);
+        }
+
+        private async void H5rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h5r", h5rEntry.Text);
+        }
+
+        private async void H4rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h4r", h4rEntry.Text);
+        }
+
+        private async void H3rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h3r", h3rEntry.Text);
+        }
+
+        private async void H2rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h2r", h2rEntry.Text);
+        }
+
+        private async void H1rEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await DBHelper.getInstance().updateScoreCard(sd.currentScoreCard.id, "h1r", h1rEntry.Text);
+        }
+
         private async void ViewLeaderBoardButton_Clicked(object sender, EventArgs e)
         {
-            await DisplayAlert("UserCount", "This Game has " + (sd.watchingPlayers.Count + 1) + " players", "Ok");
-            if (sd.watchingPlayers.Count == 0)
+            await DisplayAlert("UserCount", "This Game has " + (sd.watchingUsers.Count + 1) + " players", "Ok");
+            if (sd.watchingUsers.Count == 0)
             {
                 await DisplayAlert("ERROR", "Add users to see the scoreboard", "Ok");
             }
-            else {
+            else
+            {
                 await Navigation.PushAsync(new ViewLeaderBoardPage(sd));
-                var pages = Navigation.NavigationStack.ToList();
-                foreach (var page in pages)
-                {
-                    if (page.GetType() != typeof(ViewLeaderBoardPage))
-                    {
-                        Navigation.RemovePage(page);
-                    }
-                }
+                //var pages = Navigation.NavigationStack.ToList();
+                //foreach (var page in pages)
+                //{
+                //    if (page.GetType() != typeof(ViewLeaderBoardPage))
+                //    {
+                //        Navigation.RemovePage(page);
+                //    }
+                //}
             }
         }
 
@@ -499,644 +714,106 @@ namespace GolfApp1.Views
             }
         }
 
-        protected override async void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
             MessagingCenter.Send(this, "PreventPortrait");
-            await updateCourseValues();
+            sd.currentCourse = await DBHelper.getInstance().getCourseAsync(sd.currentCourse.id);
+            fillOutCourseData();
+            sd.currentScoreCard = await DBHelper.getInstance().getScoreCardAsync(sd.currentScoreCard.id);
+
+            h1rEntry.Text = sd.currentScoreCard.rawScores[0].ToString();
+            h2rEntry.Text = sd.currentScoreCard.rawScores[1].ToString();
+            h3rEntry.Text = sd.currentScoreCard.rawScores[2].ToString();
+            h4rEntry.Text = sd.currentScoreCard.rawScores[3].ToString();
+            h5rEntry.Text = sd.currentScoreCard.rawScores[4].ToString();
+            h6rEntry.Text = sd.currentScoreCard.rawScores[5].ToString();
+            h7rEntry.Text = sd.currentScoreCard.rawScores[6].ToString();
+            h8rEntry.Text = sd.currentScoreCard.rawScores[7].ToString();
+            h9rEntry.Text = sd.currentScoreCard.rawScores[8].ToString();
+            h10rEntry.Text = sd.currentScoreCard.rawScores[9].ToString();
+            h11rEntry.Text = sd.currentScoreCard.rawScores[10].ToString();
+            h12rEntry.Text = sd.currentScoreCard.rawScores[11].ToString();
+            h13rEntry.Text = sd.currentScoreCard.rawScores[12].ToString();
+            h14rEntry.Text = sd.currentScoreCard.rawScores[13].ToString();
+            h15rEntry.Text = sd.currentScoreCard.rawScores[14].ToString();
+            h16rEntry.Text = sd.currentScoreCard.rawScores[15].ToString();
+            h17rEntry.Text = sd.currentScoreCard.rawScores[16].ToString();
+            h18rEntry.Text = sd.currentScoreCard.rawScores[17].ToString();
+
+            h1spEntry.Text = sd.currentScoreCard.specialScores[0].ToString();
+            h2spEntry.Text = sd.currentScoreCard.specialScores[1].ToString();
+            h3spEntry.Text = sd.currentScoreCard.specialScores[2].ToString();
+            h4spEntry.Text = sd.currentScoreCard.specialScores[3].ToString();
+            h5spEntry.Text = sd.currentScoreCard.specialScores[4].ToString();
+            h6spEntry.Text = sd.currentScoreCard.specialScores[5].ToString();
+            h7spEntry.Text = sd.currentScoreCard.specialScores[6].ToString();
+            h8spEntry.Text = sd.currentScoreCard.specialScores[7].ToString();
+            h9spEntry.Text = sd.currentScoreCard.specialScores[8].ToString();
+            h10spEntry.Text = sd.currentScoreCard.specialScores[9].ToString();
+            h11spEntry.Text = sd.currentScoreCard.specialScores[10].ToString();
+            h12spEntry.Text = sd.currentScoreCard.specialScores[11].ToString();
+            h13spEntry.Text = sd.currentScoreCard.specialScores[12].ToString();
+            h14spEntry.Text = sd.currentScoreCard.specialScores[13].ToString();
+            h15spEntry.Text = sd.currentScoreCard.specialScores[14].ToString();
+            h16spEntry.Text = sd.currentScoreCard.specialScores[15].ToString();
+            h17spEntry.Text = sd.currentScoreCard.specialScores[16].ToString();
+            h18spEntry.Text = sd.currentScoreCard.specialScores[17].ToString();
+
+            //if (sd.watchingUsers.Count > 0) {
+            //    calcHandicapData();
+            //}
         }
+
+        //private void calcHandicapData()
+        //{
+        //}
+
+        private void fillOutCourseData()
+        {
+            p1Label.Text = sd.currentCourse.pars[0].ToString();
+            p2Label.Text = sd.currentCourse.pars[1].ToString();
+            p3Label.Text = sd.currentCourse.pars[2].ToString();
+            p4Label.Text = sd.currentCourse.pars[3].ToString();
+            p5Label.Text = sd.currentCourse.pars[4].ToString();
+            p6Label.Text = sd.currentCourse.pars[5].ToString();
+            p7Label.Text = sd.currentCourse.pars[6].ToString();
+            p8Label.Text = sd.currentCourse.pars[7].ToString();
+            p9Label.Text = sd.currentCourse.pars[8].ToString();
+            p10Label.Text = sd.currentCourse.pars[9].ToString();
+            p11Label.Text = sd.currentCourse.pars[10].ToString();
+            p12Label.Text = sd.currentCourse.pars[11].ToString();
+            p13Label.Text = sd.currentCourse.pars[12].ToString();
+            p14Label.Text = sd.currentCourse.pars[13].ToString();
+            p15Label.Text = sd.currentCourse.pars[14].ToString();
+            p16Label.Text = sd.currentCourse.pars[15].ToString();
+            p17Label.Text = sd.currentCourse.pars[16].ToString();
+            p18Label.Text = sd.currentCourse.pars[17].ToString();
+
+            h1hcEntry.Text = sd.currentCourse.handicaps[0].ToString();
+            h2hcEntry.Text = sd.currentCourse.handicaps[1].ToString();
+            h3hcEntry.Text = sd.currentCourse.handicaps[2].ToString();
+            h4hcEntry.Text = sd.currentCourse.handicaps[3].ToString();
+            h5hcEntry.Text = sd.currentCourse.handicaps[4].ToString();
+            h6hcEntry.Text = sd.currentCourse.handicaps[5].ToString();
+            h7hcEntry.Text = sd.currentCourse.handicaps[6].ToString();
+            h8hcEntry.Text = sd.currentCourse.handicaps[7].ToString();
+            h9hcEntry.Text = sd.currentCourse.handicaps[8].ToString();
+            h10hcEntry.Text = sd.currentCourse.handicaps[9].ToString();
+            h11hcEntry.Text = sd.currentCourse.handicaps[10].ToString();
+            h12hcEntry.Text = sd.currentCourse.handicaps[11].ToString();
+            h13hcEntry.Text = sd.currentCourse.handicaps[12].ToString();
+            h14hcEntry.Text = sd.currentCourse.handicaps[13].ToString();
+            h15hcEntry.Text = sd.currentCourse.handicaps[14].ToString();
+            h16hcEntry.Text = sd.currentCourse.handicaps[15].ToString();
+            h17hcEntry.Text = sd.currentCourse.handicaps[16].ToString();
+            h18hcEntry.Text = sd.currentCourse.handicaps[17].ToString();
+        }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             MessagingCenter.Send(this, "PreventLandscape");
-        }
-
-        private async Task updateCourseValues() {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(addressCourse + sd.courseID);
-            string msg = await response.Content.ReadAsStringAsync();
-
-            //await DisplayAlert("MSG: ", msg, "Ok");
-
-            //await parseCourse(msg);
-            myCourse = parseCourse(msg);
-
-            p1Label.Text = myCourse.h1p.ToString();
-            p2Label.Text = myCourse.h2p.ToString();
-            p3Label.Text = myCourse.h3p.ToString();
-            p4Label.Text = myCourse.h4p.ToString();
-            p5Label.Text = myCourse.h5p.ToString();
-            p6Label.Text = myCourse.h6p.ToString();
-            p7Label.Text = myCourse.h7p.ToString();
-            p8Label.Text = myCourse.h8p.ToString();
-            p9Label.Text = myCourse.h9p.ToString();
-            p10Label.Text = myCourse.h10p.ToString();
-            p11Label.Text = myCourse.h11p.ToString();
-            p12Label.Text = myCourse.h12p.ToString();
-            p13Label.Text = myCourse.h13p.ToString();
-            p14Label.Text = myCourse.h14p.ToString();
-            p15Label.Text = myCourse.h15p.ToString();
-            p16Label.Text = myCourse.h16p.ToString();
-            p17Label.Text = myCourse.h17p.ToString();
-            p18Label.Text = myCourse.h18p.ToString();
-
-
-            h1hcEntry.Text = myCourse.h1hc.ToString();
-            h2hcEntry.Text = myCourse.h2hc.ToString();
-            h3hcEntry.Text = myCourse.h3hc.ToString();
-            h4hcEntry.Text = myCourse.h4hc.ToString();
-            h5hcEntry.Text = myCourse.h5hc.ToString();
-            h6hcEntry.Text = myCourse.h6hc.ToString();
-            h7hcEntry.Text = myCourse.h7hc.ToString();
-            h8hcEntry.Text = myCourse.h8hc.ToString();
-            h9hcEntry.Text = myCourse.h9hc.ToString();
-            h10hcEntry.Text = myCourse.h10hc.ToString();
-            h11hcEntry.Text = myCourse.h11hc.ToString();
-            h12hcEntry.Text = myCourse.h12hc.ToString();
-            h13hcEntry.Text = myCourse.h13hc.ToString();
-            h14hcEntry.Text = myCourse.h14hc.ToString();
-            h15hcEntry.Text = myCourse.h15hc.ToString();
-            h16hcEntry.Text = myCourse.h16hc.ToString();
-            h17hcEntry.Text = myCourse.h17hc.ToString();
-            h18hcEntry.Text = myCourse.h18hc.ToString();
-        }
-
-        //private async Task parseCourse(string msg)
-        private Course parseCourse(string msg)
-        {
-            Course ans = new Course();
-
-            string nameStartStr = "\"name\": ";
-            string parStartStr = "\"par\": ";
-
-            string h1pStartStr = "\"h1p\": ";
-            string h2pStartStr = "\"h2p\": ";
-            string h3pStartStr = "\"h3p\": ";
-            string h4pStartStr = "\"h4p\": ";
-            string h5pStartStr = "\"h5p\": ";
-            string h6pStartStr = "\"h6p\": ";
-            string h7pStartStr = "\"h7p\": ";
-            string h8pStartStr = "\"h8p\": ";
-            string h9pStartStr = "\"h9p\": ";
-            string h10pStartStr = "\"h10p\": ";
-            string h11pStartStr = "\"h11p\": ";
-            string h12pStartStr = "\"h12p\": ";
-            string h13pStartStr = "\"h13p\": ";
-            string h14pStartStr = "\"h14p\": ";
-            string h15pStartStr = "\"h15p\": ";
-            string h16pStartStr = "\"h16p\": ";
-            string h17pStartStr = "\"h17p\": ";
-            string h18pStartStr = "\"h18p\": ";
-
-            string h1hcStartStr = "\"h1hc\": ";
-            string h2hcStartStr = "\"h2hc\": ";
-            string h3hcStartStr = "\"h3hc\": ";
-            string h4hcStartStr = "\"h4hc\": ";
-            string h5hcStartStr = "\"h5hc\": ";
-            string h6hcStartStr = "\"h6hc\": ";
-            string h7hcStartStr = "\"h7hc\": ";
-            string h8hcStartStr = "\"h8hc\": ";
-            string h9hcStartStr = "\"h9hc\": ";
-            string h10hcStartStr = "\"h10hc\": ";
-            string h11hcStartStr = "\"h11hc\": ";
-            string h12hcStartStr = "\"h12hc\": ";
-            string h13hcStartStr = "\"h13hc\": ";
-            string h14hcStartStr = "\"h14hc\": ";
-            string h15hcStartStr = "\"h15hc\": ";
-            string h16hcStartStr = "\"h16hc\": ";
-            string h17hcStartStr = "\"h17hc\": ";
-            string h18hcStartStr = "\"h18hc\": ";
-
-
-            int nameStart = msg.IndexOf(nameStartStr);
-            int parStart = msg.IndexOf(parStartStr);
-
-            int h1pStart = msg.IndexOf(h1pStartStr);
-            int h2pStart = msg.IndexOf(h2pStartStr);
-            int h3pStart = msg.IndexOf(h3pStartStr);
-            int h4pStart = msg.IndexOf(h4pStartStr);
-            int h5pStart = msg.IndexOf(h5pStartStr);
-            int h6pStart = msg.IndexOf(h6pStartStr);
-            int h7pStart = msg.IndexOf(h7pStartStr);
-            int h8pStart = msg.IndexOf(h8pStartStr);
-            int h9pStart = msg.IndexOf(h9pStartStr);
-            int h10pStart = msg.IndexOf(h10pStartStr);
-            int h11pStart = msg.IndexOf(h11pStartStr);
-            int h12pStart = msg.IndexOf(h12pStartStr);
-            int h13pStart = msg.IndexOf(h13pStartStr);
-            int h14pStart = msg.IndexOf(h14pStartStr);
-            int h15pStart = msg.IndexOf(h15pStartStr);
-            int h16pStart = msg.IndexOf(h16pStartStr);
-            int h17pStart = msg.IndexOf(h17pStartStr);
-            int h18pStart = msg.IndexOf(h18pStartStr);
-            
-            int h1hcStart = msg.IndexOf(h1hcStartStr);
-            int h2hcStart = msg.IndexOf(h2hcStartStr);
-            int h3hcStart = msg.IndexOf(h3hcStartStr);
-            int h4hcStart = msg.IndexOf(h4hcStartStr);
-            int h5hcStart = msg.IndexOf(h5hcStartStr);
-            int h6hcStart = msg.IndexOf(h6hcStartStr);
-            int h7hcStart = msg.IndexOf(h7hcStartStr);
-            int h8hcStart = msg.IndexOf(h8hcStartStr);
-            int h9hcStart = msg.IndexOf(h9hcStartStr);
-            int h10hcStart = msg.IndexOf(h10hcStartStr);
-            int h11hcStart = msg.IndexOf(h11hcStartStr);
-            int h12hcStart = msg.IndexOf(h12hcStartStr);
-            int h13hcStart = msg.IndexOf(h13hcStartStr);
-            int h14hcStart = msg.IndexOf(h14hcStartStr);
-            int h15hcStart = msg.IndexOf(h15hcStartStr);
-            int h16hcStart = msg.IndexOf(h16hcStartStr);
-            int h17hcStart = msg.IndexOf(h17hcStartStr);
-            int h18hcStart = msg.IndexOf(h18hcStartStr);
-
-            string newname = msg.Substring(nameStart + nameStartStr.Length, parStart - parStartStr.Length);
-            string newpar = (string) ((msg.Substring(parStart + parStartStr.Length, parStart + parStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-
-            string newh1p = (string) ((msg.Substring(h1pStart + h1pStartStr.Length, h1pStart + h1pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H1P", newh1p, "Ok");
-
-            string newh2p = (string) ((msg.Substring(h2pStart + h2pStartStr.Length, h2pStart + h2pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H2P", newh2p, "Ok");
-
-            string newh3p = (string) ((msg.Substring(h3pStart + h3pStartStr.Length, h3pStart + h3pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H3P", newh3p, "Ok");
-
-            string newh4p = (string) ((msg.Substring(h4pStart + h4pStartStr.Length, h4pStart + h4pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H4P", newh4p, "Ok");
-
-            string newh5p = (string) ((msg.Substring(h5pStart + h5pStartStr.Length, h5pStart + h5pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H5P", newh5p, "Ok");
-
-            string newh6p = (string) ((msg.Substring(h6pStart + h6pStartStr.Length, h6pStart + h6pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H6P", newh6p, "Ok");
-
-            string newh7p = (string) ((msg.Substring(h7pStart + h7pStartStr.Length, h7pStart + h7pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H7P", newh7p, "Ok");
-
-            string newh8p = (string) ((msg.Substring(h8pStart + h8pStartStr.Length, h8pStart + h8pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H8P", newh8p, "Ok");
-
-            string newh9p = (string) ((msg.Substring(h9pStart + h9pStartStr.Length, h9pStart + h9pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H9P", newh9p, "Ok");
-
-            string newh10p = (string) ((msg.Substring(h10pStart + h10pStartStr.Length, h10pStart + h10pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H10P", newh10p, "Ok");
-
-            string newh11p = (string) ((msg.Substring(h11pStart + h11pStartStr.Length, h11pStart + h11pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H11P", newh11p, "Ok");
-
-            string newh12p = (string) ((msg.Substring(h12pStart + h12pStartStr.Length, h12pStart + h12pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H12P", newh12p, "Ok");
-
-            string newh13p = (string) ((msg.Substring(h13pStart + h13pStartStr.Length, h13pStart + h13pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H13P", newh13p, "Ok");
-
-            string newh14p = (string) ((msg.Substring(h14pStart + h14pStartStr.Length, h14pStart + h14pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H14P", newh14p, "Ok");
-
-            string newh15p = (string) ((msg.Substring(h15pStart + h15pStartStr.Length, h15pStart + h15pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H15P", newh15p, "Ok");
-
-            string newh16p = (string) ((msg.Substring(h16pStart + h16pStartStr.Length, h16pStart + h16pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H16P", newh16p, "Ok");
-
-            string newh17p = (string) ((msg.Substring(h17pStart + h17pStartStr.Length, h17pStart + h17pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H17P", newh17p, "Ok");
-
-            //string newh18p = "0";
-            //string newh1hc = "0";
-            //string newh2hc = "0";
-            //string newh3hc = "0";
-            //string newh4hc = "0";
-            //string newh5hc = "0";
-            //string newh6hc = "0";
-            //string newh7hc = "0";
-            //string newh8hc = "0";
-            //string newh9hc = "0";
-            //string newh10hc = "0";
-            //string newh11hc = "0";
-            //string newh12hc = "0";
-            //string newh13hc = "0";
-            //string newh14hc = "0";
-            //string newh15hc = "0";
-            //string newh16hc = "0";
-            //string newh17hc = "0";
-            //string newh18hc = "0";
-
-            //await DisplayAlert("h18pStart", h18pStart.ToString(), "Ok");
-            //await DisplayAlert("h18pStartStr", h18pStartStr, "Ok");
-            //await DisplayAlert("h18pStartStr Length", h18pStartStr.Length.ToString(), "Ok");
-            //await DisplayAlert("MSG LENGTH:", msg.Length.ToString(), "Ok");
-
-            //string newh18p = (string)((msg.Substring(h18pStart + h18pStartStr.Length, h18pStart + h18pStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh18p = (string)((msg.Substring(h18pStart + h18pStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H18P", newh18p, "Ok");
-
-
-            //string newh1hc = (string) ((msg.Substring(h1hcStart + h1hcStartStr.Length, h1hcStart + h1hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh1hc = (string) ((msg.Substring(h1hcStart + h1hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H1HC", newh1hc, "Ok");
-
-            //string newh2hc = (string) ((msg.Substring(h2hcStart + h2hcStartStr.Length, h2hcStart + h2hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh2hc = (string) ((msg.Substring(h2hcStart + h2hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H2HC", newh2hc, "Ok");
-
-            //string newh3hc = (string) ((msg.Substring(h3hcStart + h3hcStartStr.Length, h3hcStart + h3hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh3hc = (string) ((msg.Substring(h3hcStart + h3hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H3HC", newh3hc, "Ok");
-
-            //string newh4hc = (string) ((msg.Substring(h4hcStart + h4hcStartStr.Length, h4hcStart + h4hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh4hc = (string) ((msg.Substring(h4hcStart + h4hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H4HC", newh4hc, "Ok");
-
-            //string newh5hc = (string) ((msg.Substring(h5hcStart + h5hcStartStr.Length, h5hcStart + h5hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh5hc = (string) ((msg.Substring(h5hcStart + h5hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H5HC", newh5hc, "Ok");
-
-            //string newh6hc = (string) ((msg.Substring(h6hcStart + h6hcStartStr.Length, h6hcStart + h6hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh6hc = (string) ((msg.Substring(h6hcStart + h6hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H6HC", newh6hc, "Ok");
-
-            //string newh7hc = (string) ((msg.Substring(h7hcStart + h7hcStartStr.Length, h7hcStart + h7hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh7hc = (string) ((msg.Substring(h7hcStart + h7hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H7HC", newh7hc, "Ok");
-
-            //string newh8hc = (string) ((msg.Substring(h8hcStart + h8hcStartStr.Length, h8hcStart + h8hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh8hc = (string) ((msg.Substring(h8hcStart + h8hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H8HC", newh8hc, "Ok");
-
-            //string newh9hc = (string) ((msg.Substring(h9hcStart + h9hcStartStr.Length, h9hcStart + h9hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh9hc = (string) ((msg.Substring(h9hcStart + h9hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H9HC", newh9hc, "Ok");
-
-            //string newh10hc = (string) ((msg.Substring(h10hcStart + h10hcStartStr.Length, h10hcStart + h10hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh10hc = (string) ((msg.Substring(h10hcStart + h10hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H10HC", newh10hc, "Ok");
-
-            //string newh11hc = (string) ((msg.Substring(h11hcStart + h11hcStartStr.Length, h11hcStart + h11hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh11hc = (string) ((msg.Substring(h11hcStart + h11hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H11HC", newh11hc, "Ok");
-
-            //string newh12hc = (string) ((msg.Substring(h12hcStart + h12hcStartStr.Length, h12hcStart + h12hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh12hc = (string) ((msg.Substring(h12hcStart + h12hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H12HC", newh12hc, "Ok");
-
-            //string newh13hc = (string) ((msg.Substring(h13hcStart + h13hcStartStr.Length, h13hcStart + h13hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh13hc = (string) ((msg.Substring(h13hcStart + h13hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H13HC", newh13hc, "Ok");
-
-            //string newh14hc = (string) ((msg.Substring(h14hcStart + h14hcStartStr.Length, h14hcStart + h14hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh14hc = (string) ((msg.Substring(h14hcStart + h14hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H14HC", newh14hc, "Ok");
-
-            //string newh15hc = (string) ((msg.Substring(h15hcStart + h15hcStartStr.Length, h15hcStart + h15hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh15hc = (string) ((msg.Substring(h15hcStart + h15hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H15HC", newh15hc, "Ok");
-
-            //string newh16hc = (string) ((msg.Substring(h16hcStart + h16hcStartStr.Length, h16hcStart + h16hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh16hc = (string) ((msg.Substring(h16hcStart + h16hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H16HC", newh16hc, "Ok");
-
-            //string newh17hc = (string) ((msg.Substring(h17hcStart + h17hcStartStr.Length, h17hcStart + h17hcStartStr.Length + 3).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh17hc = (string) ((msg.Substring(h17hcStart + h17hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H17HC", newh17hc, "Ok");
-
-            //string newh18hc = (string) ((msg.Substring(h18hcStart + h18hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            string newh18hc = (string) ((msg.Substring(h18hcStart + h18hcStartStr.Length).Replace(",", "").Replace("\"", "")).Substring(0, 2));
-            //await DisplayAlert("H18HC", newh18hc, "Ok");
-
-
-            ans.name = newname;
-            ans.par = newpar;
-
-            ans.h1p = newh1p;
-            ans.h2p = newh2p;
-            ans.h3p = newh3p;
-            ans.h4p = newh4p;
-            ans.h5p = newh5p;
-            ans.h6p = newh6p;
-            ans.h7p = newh7p;
-            ans.h8p = newh8p;
-            ans.h9p = newh9p;
-            ans.h10p = newh10p;
-            ans.h11p = newh11p;
-            ans.h12p = newh12p;
-            ans.h13p = newh13p;
-            ans.h14p = newh14p;
-            ans.h15p = newh15p;
-            ans.h16p = newh16p;
-            ans.h17p = newh17p;
-            ans.h18p = newh18p;
-
-            ans.h1hc = newh1hc;
-            ans.h2hc = newh2hc;
-            ans.h3hc = newh3hc;
-            ans.h4hc = newh4hc;
-            ans.h5hc = newh5hc;
-            ans.h6hc = newh6hc;
-            ans.h7hc = newh7hc;
-            ans.h8hc = newh8hc;
-            ans.h9hc = newh9hc;
-            ans.h10hc = newh10hc;
-            ans.h11hc = newh11hc;
-            ans.h12hc = newh12hc;
-            ans.h13hc = newh13hc;
-            ans.h14hc = newh14hc;
-            ans.h15hc = newh15hc;
-            ans.h16hc = newh16hc;
-            ans.h17hc = newh17hc;
-            ans.h18hc = newh18hc;
-
-            return ans;
-        }
-
-        private async void H1rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h1r", h1rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H2rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h2r", h2rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H3rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h3r", h3rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H4rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h4r", h4rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H5rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h5r", h5rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H6rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h6r", h6rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H7rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h7r", h7rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H8rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h8r", h8rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H9rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h9r", h9rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H10rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h10r", h10rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H11rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h11r", h11rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H12rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h12r", h12rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H13rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h13r", h13rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H14rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h14r", h14rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H15rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h15r", h15rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H16rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h16r", h16rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H17rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h17r", h17rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-        }
-        private async void H18rEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            IEnumerable<KeyValuePair<string, string>> updateData = new List<KeyValuePair<string, string>>() {
-                new KeyValuePair<string, string>("h18r", h18rEntry.Text)
-            };
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(updateData);
-
-            HttpMethod method = new HttpMethod("PATCH");
-            HttpRequestMessage request = new HttpRequestMessage(method, addressScoreCard + sd.scoreCardID)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
         }
     }
 }

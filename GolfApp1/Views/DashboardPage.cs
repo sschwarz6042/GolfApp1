@@ -1,11 +1,10 @@
-﻿using GolfApp1.Models;
-using Rg.Plugins.Popup.Extensions;
+﻿using GolfApp1.Helpers;
+using GolfApp1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace GolfApp1.Views
@@ -14,8 +13,6 @@ namespace GolfApp1.Views
     {
         private Button createCourseButton;
         private Button newRoundButton;
-        private List<Course> courses = new List<Course>();
-        private string address = "https://golfserversws6042.herokuapp.com/course/";
         private SessionData sd;
 
         public DashboardPage(SessionData sessionData)
@@ -41,49 +38,16 @@ namespace GolfApp1.Views
 
         private async void NewRoundButton_Clicked(object sender, EventArgs e)
         {
-            await checkForCourses();
+            List<Course> courses = await DBHelper.getInstance().getAllCoursesAsync();
 
             if (courses.Count > 0)
             {
-                await Navigation.PushAsync(new SelectOptionsPopup(sd));
+                await Navigation.PushAsync(new SelectOptionsPage(sd));
             }
-            else {
+            else
+            {
                 await DisplayAlert("ERROR", "No courses found in database\nCreate a new course", "Ok");
             }
-        }
-
-        private async Task checkForCourses()
-        {
-            int id = 0;
-            bool finishedChecking = false;
-            string msg;
-
-            while (!finishedChecking) {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(address + id);
-                msg = await response.Content.ReadAsStringAsync();
-
-
-                if (msg.Contains("message") && msg.Contains("Could Not Find That Course"))
-                {
-                    finishedChecking = true;
-                }
-                else
-                {
-                    Course curCourse = parseCourse(msg);
-                    courses.Add(curCourse);
-                    id++;
-                }
-            }
-        }
-
-        private Course parseCourse(string msg)
-        {
-            Course ansCourse = new Course();
-            
-            //Parse Course
-
-            return ansCourse;
         }
 
         private async void CreateCourseButton_Clicked(object sender, EventArgs e)

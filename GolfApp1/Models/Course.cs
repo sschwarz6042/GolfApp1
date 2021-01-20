@@ -6,45 +6,46 @@ namespace GolfApp1.Models
 {
     public class Course
     {
+        public int id { get; set; }
         public string name { get; set; }
-        public string par { get; set; }
-        
-        public string h1p { get; set; }
-        public string h2p { get; set; }
-        public string h3p { get; set; }
-        public string h4p { get; set; }
-        public string h5p { get; set; }
-        public string h6p { get; set; }
-        public string h7p { get; set; }
-        public string h8p { get; set; }
-        public string h9p { get; set; }
-        public string h10p { get; set; }
-        public string h11p { get; set; }
-        public string h12p { get; set; }
-        public string h13p { get; set; }
-        public string h14p { get; set; }
-        public string h15p { get; set; }
-        public string h16p { get; set; }
-        public string h17p { get; set; }
-        public string h18p { get; set; }
+        public int par { get; set; }
+        public int[] pars { get; set; }
+        public int[] handicaps { get; set; }
 
-        public string h1hc { get; set; }
-        public string h2hc { get; set; }
-        public string h3hc { get; set; }
-        public string h4hc { get; set; }
-        public string h5hc { get; set; }
-        public string h6hc { get; set; }
-        public string h7hc { get; set; }
-        public string h8hc { get; set; }
-        public string h9hc { get; set; }
-        public string h10hc { get; set; }
-        public string h11hc { get; set; }
-        public string h12hc { get; set; }
-        public string h13hc { get; set; }
-        public string h14hc { get; set; }
-        public string h15hc { get; set; }
-        public string h16hc { get; set; }
-        public string h17hc { get; set; }
-        public string h18hc { get; set; }
+        public Course()
+        {
+            this.id = -1;
+            this.name = "";
+            this.par = 0;
+            this.pars = new int[18];
+            this.handicaps = new int[18];
+        }
+
+        public Course(int i, string n)
+        {
+            this.id = i;
+            this.name = n;
+            this.par = 0;
+            this.pars = new int[18];
+            this.handicaps = new int[18];
+        }
+
+        public Course(int i, string n, int p)
+        {
+            this.id = i;
+            this.name = n;
+            this.par = p;
+            this.pars = new int[18];
+            this.handicaps = new int[18];
+        }
+
+        public Course(int i, string n, int p, int[] ps, int[] hs)
+        {
+            this.id = i;
+            this.name = n;
+            this.par = p;
+            this.pars = ps;
+            this.handicaps = hs;
+        }
     }
 }

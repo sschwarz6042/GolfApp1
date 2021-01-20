@@ -1,18 +1,17 @@
-﻿using GolfApp1.Models;
+﻿using GolfApp1.Helpers;
+using GolfApp1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace GolfApp1.Views
 {
     public class CreateCoursePage : ContentPage
     {
-        private string address = "https://golfserversws6042.herokuapp.com/course/";
-        private int nextID = 0;
+
         private SessionData sd;
         private myLabel BlankLabel;
         private myLabel nameLabel;
@@ -116,7 +115,6 @@ namespace GolfApp1.Views
             this.BackgroundImageSource = "SharecardBase.png";
             ScrollView scrollView = new ScrollView();
             Grid grid = new Grid();
-
 
             nameLabel = new myLabel();
             nameLabel.Text = "Course Name:";
@@ -349,54 +347,66 @@ namespace GolfApp1.Views
 
         private async void CreateCourseButton_Clicked(object sender, EventArgs e)
         {
-            IEnumerable<KeyValuePair<string, string>> courseData = new List<KeyValuePair<string, string>>()
-            {
-                new KeyValuePair<string, string>("name", nameEntry.Text),
-                new KeyValuePair<string, string>("par", parEntry.Text),
-                new KeyValuePair<string, string>("h1p", h1pEntry.Text),
-                new KeyValuePair<string, string>("h2p", h2pEntry.Text),
-                new KeyValuePair<string, string>("h3p", h3pEntry.Text),
-                new KeyValuePair<string, string>("h4p", h4pEntry.Text),
-                new KeyValuePair<string, string>("h5p", h5pEntry.Text),
-                new KeyValuePair<string, string>("h6p", h6pEntry.Text),
-                new KeyValuePair<string, string>("h7p", h7pEntry.Text),
-                new KeyValuePair<string, string>("h8p", h8pEntry.Text),
-                new KeyValuePair<string, string>("h9p", h9pEntry.Text),
-                new KeyValuePair<string, string>("h10p", h10pEntry.Text),
-                new KeyValuePair<string, string>("h11p", h11pEntry.Text),
-                new KeyValuePair<string, string>("h12p", h12pEntry.Text),
-                new KeyValuePair<string, string>("h13p", h13pEntry.Text),
-                new KeyValuePair<string, string>("h14p", h14pEntry.Text),
-                new KeyValuePair<string, string>("h15p", h15pEntry.Text),
-                new KeyValuePair<string, string>("h16p", h16pEntry.Text),
-                new KeyValuePair<string, string>("h17p", h17pEntry.Text),
-                new KeyValuePair<string, string>("h18p", h18pEntry.Text),
-                new KeyValuePair<string, string>("h1hc", h1hcEntry.Text),
-                new KeyValuePair<string, string>("h2hc", h2hcEntry.Text),
-                new KeyValuePair<string, string>("h3hc", h3hcEntry.Text),
-                new KeyValuePair<string, string>("h4hc", h4hcEntry.Text),
-                new KeyValuePair<string, string>("h5hc", h5hcEntry.Text),
-                new KeyValuePair<string, string>("h6hc", h6hcEntry.Text),
-                new KeyValuePair<string, string>("h7hc", h7hcEntry.Text),
-                new KeyValuePair<string, string>("h8hc", h8hcEntry.Text),
-                new KeyValuePair<string, string>("h9hc", h9hcEntry.Text),
-                new KeyValuePair<string, string>("h10hc", h10hcEntry.Text),
-                new KeyValuePair<string, string>("h11hc", h11hcEntry.Text),
-                new KeyValuePair<string, string>("h12hc", h12hcEntry.Text),
-                new KeyValuePair<string, string>("h13hc", h13hcEntry.Text),
-                new KeyValuePair<string, string>("h14hc", h14hcEntry.Text),
-                new KeyValuePair<string, string>("h15hc", h15hcEntry.Text),
-                new KeyValuePair<string, string>("h16hc", h16hcEntry.Text),
-                new KeyValuePair<string, string>("h17hc", h17hcEntry.Text),
-                new KeyValuePair<string, string>("h18hc", h18hcEntry.Text)
-            };
+            int[] pars = new int[18];
+            int[] handicaps = new int[18];
 
-            await findEmptyID();
-            HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(courseData);
-            HttpResponseMessage response = await client.PutAsync(address + nextID, content);
-            await DisplayAlert("Course Created", "Your Course Was Created Successfully", "Ok");
-            await Navigation.PushAsync(new DashboardPage(sd));
+            try
+            {
+                pars[0] = Int32.Parse(h1pEntry.Text);
+                pars[1] = Int32.Parse(h2pEntry.Text);
+                pars[2] = Int32.Parse(h3pEntry.Text);
+                pars[3] = Int32.Parse(h4pEntry.Text);
+                pars[4] = Int32.Parse(h5pEntry.Text);
+                pars[5] = Int32.Parse(h6pEntry.Text);
+                pars[6] = Int32.Parse(h7pEntry.Text);
+                pars[7] = Int32.Parse(h8pEntry.Text);
+                pars[8] = Int32.Parse(h9pEntry.Text);
+                pars[9] = Int32.Parse(h10pEntry.Text);
+                pars[10] = Int32.Parse(h11pEntry.Text);
+                pars[11] = Int32.Parse(h12pEntry.Text);
+                pars[12] = Int32.Parse(h13pEntry.Text);
+                pars[13] = Int32.Parse(h14pEntry.Text);
+                pars[14] = Int32.Parse(h15pEntry.Text);
+                pars[15] = Int32.Parse(h16pEntry.Text);
+                pars[16] = Int32.Parse(h17pEntry.Text);
+                pars[17] = Int32.Parse(h18pEntry.Text);
+
+                handicaps[0] = Int32.Parse(h1hcEntry.Text);
+                handicaps[1] = Int32.Parse(h2hcEntry.Text);
+                handicaps[2] = Int32.Parse(h3hcEntry.Text);
+                handicaps[3] = Int32.Parse(h4hcEntry.Text);
+                handicaps[4] = Int32.Parse(h5hcEntry.Text);
+                handicaps[5] = Int32.Parse(h6hcEntry.Text);
+                handicaps[6] = Int32.Parse(h7hcEntry.Text);
+                handicaps[7] = Int32.Parse(h8hcEntry.Text);
+                handicaps[8] = Int32.Parse(h9hcEntry.Text);
+                handicaps[9] = Int32.Parse(h10hcEntry.Text);
+                handicaps[10] = Int32.Parse(h11hcEntry.Text);
+                handicaps[11] = Int32.Parse(h12hcEntry.Text);
+                handicaps[12] = Int32.Parse(h13hcEntry.Text);
+                handicaps[13] = Int32.Parse(h14hcEntry.Text);
+                handicaps[14] = Int32.Parse(h15hcEntry.Text);
+                handicaps[15] = Int32.Parse(h16hcEntry.Text);
+                handicaps[16] = Int32.Parse(h17hcEntry.Text);
+                handicaps[17] = Int32.Parse(h18hcEntry.Text);
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("ERROR", "Invalid Input", "Ok");
+                return;
+            }
+
+            bool success = await DBHelper.getInstance().createCourseAsync(nameEntry.Text, Int32.Parse(parEntry.Text), pars, handicaps);
+
+            if (success)
+            {
+                await DisplayAlert("Course Created", "Your Course Was Created Successfully", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("ERROR", "Could not create your course", "Ok");
+            }
+
             var pages = Navigation.NavigationStack.ToList();
             foreach (var page in pages)
             {
@@ -406,31 +416,5 @@ namespace GolfApp1.Views
                 }
             }
         }
-
-
-        private async Task findEmptyID()
-        {
-            nextID = 0;
-            bool finishedChecking = false;
-            string msg;
-
-            while (!finishedChecking)
-            {
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(address + nextID);
-                msg = await response.Content.ReadAsStringAsync();
-                //await DisplayAlert("Checking ID", "Checking " + nextID + "\n" + msg, "Ok");
-
-                if (msg.Contains("message") && msg.Contains("Could Not Find That Course"))
-                {
-                    finishedChecking = true;
-                }
-                else
-                {
-                    nextID++;
-                }
-            }
-        }
-
     }
 }
