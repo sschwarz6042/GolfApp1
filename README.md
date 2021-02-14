@@ -1,1 +1,2 @@
 # ShareCard
+ShareCard lets golfers store course data and their current scorecard in a RESTful server and view the scorecards of other players. This app is intended to be used for golf tournaments so that players can compare scores and see the current leaderboard as they are playing. Without an app to do this players will have to wait until after the tournament ends to compare scores because groups of golfers will be playing at different holes in different parts of the golf course. 
